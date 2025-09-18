@@ -1,100 +1,147 @@
-/* ===== STYLE ===== */
-html, body {
-  height: 100%;
-  margin: 0;
-  padding: 0;
-  font-family: Arial, sans-serif;
-  background: #f9f9f9;
-}
-
 body {
+
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+  margin: 0;
+
+  padding: 0;
+
+  background: linear-gradient(135deg, #74ebd5 0%, #ACB6E5 100%);
+
   display: flex;
+
   justify-content: center;
-  align-items: center; /* Centrado vertical */
-  min-height: 100vh;   /* Ocupa toda la altura de la pantalla */
-  padding: 10px;
-  box-sizing: border-box;
+
+  align-items: center;
+
+  height: 100vh;
+
 }
 
 .card {
-  background: white;
-  padding: 25px;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+
+  background: #fff;
+
+  padding: 30px;
+
+  border-radius: 16px;
+
+  box-shadow: 0 6px 18px rgba(0,0,0,0.2);
+
+  max-width: 420px;
+
   width: 100%;
-  max-width: 400px;
-  box-sizing: border-box;
+
+  animation: fadeIn 0.6s ease;
+
 }
 
 h2 {
+
   text-align: center;
-  color: #333;
+
   margin-bottom: 20px;
-  font-size: 1.6em;
+
+  color: #333;
+
 }
 
-.input-group {
-  margin-bottom: 15px;
+label {
+
+  display: block;
+
+  margin-top: 15px;
+
+  font-weight: bold;
+
+  color: #444;
+
 }
 
-.input-row {
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
-}
+input, select {
 
-.input-row input {
-  flex: 1 1 auto;
+  width: 100%;
+
   padding: 10px;
+
+  margin-top: 6px;
+
   border-radius: 8px;
+
   border: 1px solid #ccc;
-  font-size: 1em;
+
+  font-size: 15px;
+
   box-sizing: border-box;
+
+  transition: border 0.2s;
+
 }
 
-.input-row select {
-  flex: 0 0 120px;
-  padding: 10px;
-  border-radius: 8px;
-  border: 1px solid #ccc;
-  font-size: 1em;
+input:focus, select:focus {
+
+  border: 1px solid #007BFF;
+
+  outline: none;
+
 }
 
 button {
-  margin-top: 10px;
+
+  margin-top: 20px;
+
   width: 100%;
+
   padding: 12px;
+
   background: #007BFF;
+
   color: white;
+
+  font-size: 16px;
+
+  font-weight: bold;
+
   border: none;
-  border-radius: 8px;
-  font-size: 1em;
+
+  border-radius: 10px;
+
   cursor: pointer;
+
+  transition: background 0.3s;
+
 }
 
 button:hover {
+
   background: #0056b3;
+
 }
 
 .resultado {
+
   margin-top: 20px;
+
   padding: 15px;
-  border-radius: 8px;
+
+  border-radius: 10px;
+
   background: #eef;
-  font-size: 1em;
+
+  font-size: 16px;
+
   line-height: 1.4;
-  word-break: break-word;
+
+  box-shadow: inset 0 0 6px rgba(0,0,0,0.1);
+
 }
 
-/* Responsive para móvil */
-@media (max-width: 480px) {
-  .card {
-    padding: 15px;
-  }
-  h2 {
-    font-size: 1.3em;
-  }
-  .input-row select {
-    flex: 0 0 100%;
-  }
+/* Animación de entrada */
+
+@keyframes fadeIn {
+
+  from { opacity: 0; transform: translateY(20px); }
+
+  to { opacity: 1; transform: translateY(0); }
+
 }
