@@ -1,65 +1,119 @@
-<!DOCTYPE html>
-<html lang="es">
+<!DOCTYPE html><html lang="es">
+
 <head>
+
   <meta charset="UTF-8">
-  <title>Calculadora QTc (Bazett)</title>
-  <link rel="stylesheet" href="style.css">
+
+  <title>Calculadora QTc</title>
+
+  <style>
+
+    body { font-family: Arial, sans-serif; margin: 40px; background: #f9f9f9; }
+
+    h2 { color: #333; }
+
+    .card { background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); max-width: 400px; }
+
+    label { display: block; margin-top: 10px; }
+
+    input { width: 100%; padding: 8px; margin-top: 4px; border-radius: 8px; border: 1px solid #ccc; }
+
+    select { padding: 6px; border-radius: 6px; margin-left: 5px; }
+
+    button { margin-top: 15px; padding: 10px 20px; background: #007BFF; color: white; border: none; border-radius: 8px; cursor: pointer; }
+
+    button:hover { background: #0056b3; }
+
+    .resultado { margin-top: 20px; padding: 15px; border-radius: 8px; background: #eef; }
+
+  </style>
+
 </head>
+
 <body>
+
   <div class="card">
-    <h2>Calculadora de QTc (Bazett)</h2>
 
-    <label for="qt">QT:</label>
-    <input type="number" id="qt" step="0.01" placeholder="Ej: 0.36 o 9 cuadraditos">
-    <select id="qtUnidad">
-      <option value="seg">segundos</option>
-      <option value="cuad">cuadraditos</option>
-    </select>
+    <h2>Calculadora de QTc (Bazett)</h2><label for="qt">QT:</label>
 
-    <label for="rr">RR:</label>
-    <input type="number" id="rr" step="0.01" placeholder="Ej: 0.84 o 21 cuadraditos">
-    <select id="rrUnidad">
-      <option value="seg">segundos</option>
-      <option value="cuad">cuadraditos</option>
-    </select>
+<input type="number" id="qt" step="0.01" placeholder="Ej: 0.36 o 9 cuadraditos">
 
-    <button onclick="calcularQTc()">Calcular</button>
+<select id="qtUnidad">
 
-    <div id="resultado" class="resultado" style="display:none;"></div>
-  </div>
+  <option value="seg">segundos</option>
 
-  <script>
+  <option value="cuad">cuadraditos</option>
+
+</select>
+
+<label for="rr">RR:</label>
+
+<input type="number" id="rr" step="0.01" placeholder="Ej: 0.84 o 21 cuadraditos">
+
+<select id="rrUnidad">
+
+  <option value="seg">segundos</option>
+
+  <option value="cuad">cuadraditos</option>
+
+</select>
+
+<button onclick="calcularQTc()">Calcular</button>
+
+<div id="resultado" class="resultado" style="display:none;"></div>
+
+  </div>  <script>
+
     function calcularQTc() {
+
       let qt = parseFloat(document.getElementById("qt").value);
+
       let rr = parseFloat(document.getElementById("rr").value);
+
       let qtUnidad = document.getElementById("qtUnidad").value;
+
       let rrUnidad = document.getElementById("rrUnidad").value;
 
       if (isNaN(qt) || isNaN(rr)) {
+
         alert("Por favor, ingresa valores válidos");
+
         return;
+
       }
 
       // convertir si está en cuadraditos
+
       if (qtUnidad === "cuad") qt *= 0.04;
+
       if (rrUnidad === "cuad") rr *= 0.04;
 
       // Fórmula de Bazett
+
       let qtc = qt / Math.sqrt(rr);
+
       let qtcMs = qtc * 1000; // pasar a milisegundos
 
       // Interpretación simple
+
       let interpretacion = "";
+
       if (qtcMs < 440) interpretacion = "Normal en varones";
+
       else if (qtcMs < 460) interpretacion = "Normal en mujeres, límite en varones";
+
       else interpretacion = "Prolongado";
 
-      const resultadoDiv = document.getElementById("resultado");
-      resultadoDiv.style.display = "block";
-      resultadoDiv.innerHTML =
+      document.getElementById("resultado").style.display = "block";
+
+      document.getElementById("resultado").innerHTML =
+
         `<b>QTc (Bazett):</b> ${qtcMs.toFixed(0)} ms <br>` +
+
         `<b>Interpretación:</b> ${interpretacion}`;
+
     }
-  </script>
-</body>
+
+  </script></body>
+
 </html>
