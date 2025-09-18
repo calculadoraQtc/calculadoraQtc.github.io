@@ -98,36 +98,34 @@
       color: #003366;
     }
 
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+      font-size: 14px;
+    }
+
+    th, td {
+      border: 1px solid #ccc;
+      padding: 8px;
+      text-align: center;
+    }
+
+    th {
+      background: #007BFF;
+      color: white;
+    }
+
     @keyframes fadeIn {
-      from {
-        opacity: 0;
-        transform: translateY(20px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     @media (max-width: 480px) {
-      .card {
-        max-width: 95%;
-        padding: 20px;
-      }
-      h2 {
-        font-size: 20px;
-        margin-bottom: 20px;
-      }
-      input,
-      select,
-      button {
-        font-size: 14px;
-        padding: 10px;
-      }
-      .resultado {
-        font-size: 14px;
-        padding: 12px;
-      }
+      .card { max-width: 95%; padding: 20px; }
+      h2 { font-size: 20px; margin-bottom: 20px; }
+      input, button { font-size: 14px; padding: 10px; }
+      .resultado { font-size: 14px; padding: 12px; }
     }
   </style>
 </head>
@@ -135,15 +133,6 @@
 <body>
   <div class="card">
     <h2>Calculadora de QTc (Bazett)</h2>
-
-    <label for="edad">Edad:</label>
-    <input type="number" id="edad" step="1" placeholder="Edad en años">
-
-    <label for="sexo">Sexo:</label>
-    <select id="sexo">
-      <option value="varon">Varón</option>
-      <option value="mujer">Mujer</option>
-    </select>
 
     <label for="qt">QT:</label>
     <input type="number" id="qt" step="0.01" placeholder="Ej: 0.36 o 9 cuadraditos">
@@ -162,6 +151,41 @@
     <button onclick="calcularQTc()">Calcular</button>
 
     <div id="resultado" class="resultado" style="display:none;"></div>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Grupo</th>
+          <th>QTc corto (ms)</th>
+          <th>Normal (ms)</th>
+          <th>En el límite (ms)</th>
+          <th>Prolongado (ms)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1–15 años</td>
+          <td>&lt;340</td>
+          <td>340–439</td>
+          <td>440–460</td>
+          <td>&gt;460</td>
+        </tr>
+        <tr>
+          <td>Hombre adulto</td>
+          <td>&lt;340</td>
+          <td>340–429</td>
+          <td>430–450</td>
+          <td>&gt;450</td>
+        </tr>
+        <tr>
+          <td>Mujer adulta</td>
+          <td>&lt;340</td>
+          <td>340–449</td>
+          <td>450–470</td>
+          <td>&gt;470</td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 
   <script>
@@ -170,47 +194,22 @@
       let rr = parseFloat(document.getElementById("rr").value);
       let qtUnidad = document.getElementById("qtUnidad").value;
       let rrUnidad = document.getElementById("rrUnidad").value;
-      let sexo = document.getElementById("sexo").value;
-      let edad = parseInt(document.getElementById("edad").value);
 
-      if (isNaN(qt) || isNaN(rr) || isNaN(edad)) {
+      if (isNaN(qt) || isNaN(rr)) {
         alert("Por favor, ingresa valores válidos");
         return;
       }
 
-      // Convertir cuadraditos a segundos
       if (qtUnidad === "cuad") qt *= 0.04;
       if (rrUnidad === "cuad") rr *= 0.04;
 
-      // Fórmula de Bazett
       let qtc = qt / Math.sqrt(rr);
       let qtcMs = qtc * 1000;
 
-      // Interpretación clínica
-      let interpretacion = "";
-
-      if (qtcMs < 340) {
-        interpretacion = "QTc corto (patológico)";
-      } else if (edad <= 15) { // niño
-        if (qtcMs < 440) interpretacion = "Normal";
-        else if (qtcMs <= 460) interpretacion = "En el límite";
-        else interpretacion = "Prolongado";
-      } else if (sexo === "varon") { // hombre adulto
-        if (qtcMs < 430) interpretacion = "Normal";
-        else if (qtcMs <= 450) interpretacion = "En el límite";
-        else interpretacion = "Prolongado";
-      } else { // mujer adulta
-        if (qtcMs < 450) interpretacion = "Normal";
-        else if (qtcMs <= 470) interpretacion = "En el límite";
-        else interpretacion = "Prolongado";
-      }
-
       document.getElementById("resultado").style.display = "block";
       document.getElementById("resultado").innerHTML =
-        `<b>QTc (Bazett):</b> ${qtcMs.toFixed(0)} ms <br>` +
-        `<b>Interpretación:</b> ${interpretacion}`;
+        `<b>QTc (Bazett):</b> ${qtcMs.toFixed(0)} ms`;
     }
   </script>
 </body>
-
 </html>
