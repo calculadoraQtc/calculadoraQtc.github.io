@@ -1,147 +1,91 @@
 body {
-
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-
   margin: 0;
-
   padding: 0;
-
   background: linear-gradient(135deg, #74ebd5 0%, #ACB6E5 100%);
-
   display: flex;
-
   justify-content: center;
-
   align-items: center;
-
   height: 100vh;
-
 }
 
 .card {
-
   background: #fff;
-
   padding: 30px;
-
   border-radius: 16px;
-
   box-shadow: 0 6px 18px rgba(0,0,0,0.2);
-
   max-width: 420px;
-
   width: 100%;
-
   animation: fadeIn 0.6s ease;
-
 }
 
 h2 {
-
   text-align: center;
-
   margin-bottom: 20px;
-
   color: #333;
-
 }
 
 label {
-
   display: block;
-
   margin-top: 15px;
-
   font-weight: bold;
-
   color: #444;
-
 }
 
 input, select {
-
   width: 100%;
-
   padding: 10px;
-
   margin-top: 6px;
-
   border-radius: 8px;
-
   border: 1px solid #ccc;
-
   font-size: 15px;
-
   box-sizing: border-box;
-
   transition: border 0.2s;
-
 }
 
 input:focus, select:focus {
-
   border: 1px solid #007BFF;
-
   outline: none;
-
 }
 
 button {
-
   margin-top: 20px;
-
   width: 100%;
-
   padding: 12px;
-
   background: #007BFF;
-
   color: white;
-
   font-size: 16px;
-
   font-weight: bold;
-
   border: none;
-
   border-radius: 10px;
-
   cursor: pointer;
-
   transition: background 0.3s;
-
 }
 
 button:hover {
-
   background: #0056b3;
-
 }
 
 .resultado {
-
   margin-top: 20px;
-
   padding: 15px;
-
   border-radius: 10px;
-
   background: #eef;
-
   font-size: 16px;
-
   line-height: 1.4;
-
   box-shadow: inset 0 0 6px rgba(0,0,0,0.1);
-
 }
 
-/* Animación de entrada */
-
 @keyframes fadeIn {
-
   from { opacity: 0; transform: translateY(20px); }
-
   to { opacity: 1; transform: translateY(0); }
+}
 
+/* NUEVAS ADICIONES PARA MÓVILES */
+@media (max-width: 480px) {
+  body { padding: 10px; box-sizing: border-box; }
+  .card { max-width: 95%; padding: 20px; }
+  h2 { font-size: 18px; }
+  input, select, button { font-size: 14px; padding: 8px; }
+  .resultado { font-size: 14px; padding: 10px; }
 }
