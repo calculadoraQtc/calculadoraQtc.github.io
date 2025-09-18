@@ -1,8 +1,8 @@
 /* ===== STYLE ===== */
 body {
   font-family: Arial, sans-serif;
-  margin: 20px;
-  padding: 0;
+  margin: 0;
+  padding: 20px;
   background: #f9f9f9;
   display: flex;
   justify-content: center;
@@ -10,39 +10,52 @@ body {
 
 .card {
   background: white;
-  padding: 20px;
+  padding: 25px;
   border-radius: 12px;
   box-shadow: 0 4px 8px rgba(0,0,0,0.1);
   width: 100%;
-  max-width: 400px;
+  max-width: 450px;
   box-sizing: border-box;
 }
 
 h2 {
   color: #333;
   text-align: center;
-  font-size: 1.5em;
+  font-size: 1.6em;
+  margin-bottom: 20px;
 }
 
-label {
-  display: block;
-  margin-top: 10px;
+.input-group {
+  margin-bottom: 15px;
 }
 
-input, select {
-  width: 100%;
+.input-row {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.input-row input {
+  flex: 1 1 auto;
   padding: 10px;
-  margin-top: 6px;
   border-radius: 8px;
   border: 1px solid #ccc;
   font-size: 1em;
   box-sizing: border-box;
 }
 
+.input-row select {
+  flex: 0 0 120px;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 1em;
+}
+
 button {
-  margin-top: 15px;
-  padding: 12px;
+  margin-top: 10px;
   width: 100%;
+  padding: 12px;
   background: #007BFF;
   color: white;
   border: none;
@@ -62,12 +75,13 @@ button:hover {
   background: #eef;
   font-size: 1em;
   line-height: 1.4;
+  word-break: break-word;
 }
 
-/* Media query para pantallas pequeñas */
+/* Responsive para móvil */
 @media (max-width: 480px) {
   body {
-    margin: 10px;
+    padding: 10px;
   }
   .card {
     padding: 15px;
@@ -75,8 +89,7 @@ button:hover {
   h2 {
     font-size: 1.3em;
   }
-  input, select, button {
-    font-size: 0.95em;
-    padding: 8px;
+  .input-row select {
+    flex: 0 0 100%;
   }
 }
