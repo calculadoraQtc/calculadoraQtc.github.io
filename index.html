@@ -105,7 +105,8 @@
       font-size: 14px;
     }
 
-    th, td {
+    th,
+    td {
       border: 1px solid #ccc;
       padding: 8px;
       text-align: center;
@@ -117,15 +118,38 @@
     }
 
     @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     @media (max-width: 480px) {
-      .card { max-width: 95%; padding: 20px; }
-      h2 { font-size: 20px; margin-bottom: 20px; }
-      input, button { font-size: 14px; padding: 10px; }
-      .resultado { font-size: 14px; padding: 12px; }
+      .card {
+        max-width: 95%;
+        padding: 20px;
+      }
+
+      h2 {
+        font-size: 20px;
+        margin-bottom: 20px;
+      }
+
+      input,
+      button {
+        font-size: 14px;
+        padding: 10px;
+      }
+
+      .resultado {
+        font-size: 14px;
+        padding: 12px;
+      }
     }
   </style>
 </head>
@@ -133,6 +157,16 @@
 <body>
   <div class="card">
     <h2>Calculadora de QTc (Bazett)</h2>
+
+    <label for="grupo">Grupo edad/sexo:</label>
+    <select id="grupo">
+      <option value="lactante">&lt;6 meses</option>
+      <option value="niño">Niño (6 meses – 12 años)</option>
+      <option value="adolescenteH">Adolescente varón</option>
+      <option value="adolescenteM">Adolescente mujer</option>
+      <option value="adultoH">Adulto hombre</option>
+      <option value="adultoM">Adulto mujer</option>
+    </select>
 
     <label for="qt">QT:</label>
     <input type="number" id="qt" step="0.01" placeholder="Ej: 0.36 o 9 cuadraditos">
@@ -164,24 +198,45 @@
       </thead>
       <tbody>
         <tr>
-          <td>1–15 años</td>
-          <td>&lt;340</td>
-          <td>340–439</td>
-          <td>440–460</td>
+          <td>Lactantes &lt;6 meses</td>
+          <td>&lt;360</td>
+          <td>360–450</td>
+          <td>451–460</td>
           <td>&gt;460</td>
         </tr>
         <tr>
-          <td>Hombre adulto</td>
-          <td>&lt;340</td>
-          <td>340–429</td>
-          <td>430–450</td>
-          <td>&gt;450</td>
+          <td>Niños (6 meses – 12 años)</td>
+          <td>&lt;360</td>
+          <td>360–440</td>
+          <td>441–460</td>
+          <td>&gt;460</td>
         </tr>
         <tr>
-          <td>Mujer adulta</td>
+          <td>Adolescentes varones</td>
           <td>&lt;340</td>
-          <td>340–449</td>
-          <td>450–470</td>
+          <td>340–450</td>
+          <td>451–460</td>
+          <td>&gt;460</td>
+        </tr>
+        <tr>
+          <td>Adolescentes mujeres</td>
+          <td>&lt;340</td>
+          <td>340–460</td>
+          <td>461–470</td>
+          <td>&gt;470</td>
+        </tr>
+        <tr>
+          <td>Adultos hombres</td>
+          <td>&lt;340</td>
+          <td>340–450</td>
+          <td>451–460</td>
+          <td>&gt;460</td>
+        </tr>
+        <tr>
+          <td>Adultos mujeres</td>
+          <td>&lt;340</td>
+          <td>340–460</td>
+          <td>461–470</td>
           <td>&gt;470</td>
         </tr>
       </tbody>
@@ -194,6 +249,7 @@
       let rr = parseFloat(document.getElementById("rr").value);
       let qtUnidad = document.getElementById("qtUnidad").value;
       let rrUnidad = document.getElementById("rrUnidad").value;
+      let grupo = document.getElementById("grupo").value;
 
       if (isNaN(qt) || isNaN(rr)) {
         alert("Por favor, ingresa valores válidos");
@@ -206,9 +262,26 @@
       let qtc = qt / Math.sqrt(rr);
       let qtcMs = qtc * 1000;
 
+      // Clasificación según grupo
+      const limites = {
+        lactante: {corto:360, normalMax:450, limite:460},
+        niño: {corto:360, normalMax:440, limite:460},
+        adolescenteH: {corto:340, normalMax:450, limite:460},
+        adolescenteM: {corto:340, normalMax:460, limite:470},
+        adultoH: {corto:340, normalMax:450, limite:460},
+        adultoM: {corto:340, normalMax:460, limite:470}
+      };
+
+      let l = limites[grupo];
+      let clasificacion;
+      if(qtcMs < l.corto) clasificacion = "QTc corto";
+      else if(qtcMs <= l.normalMax) clasificacion = "Normal";
+      else if(qtcMs <= l.limite) clasificacion = "En el límite";
+      else clasificacion = "Prolongado";
+
       document.getElementById("resultado").style.display = "block";
       document.getElementById("resultado").innerHTML =
-        `<b>QTc (Bazett):</b> ${qtcMs.toFixed(0)} ms`;
+        `<b>QTc (Bazett):</b> ${qtcMs.toFixed(0)} ms<br><b>Clasificación:</b> ${clasificacion}`;
     }
   </script>
 </body>
