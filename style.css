@@ -1,28 +1,36 @@
 /* ===== STYLE ===== */
-body {
-  font-family: Arial, sans-serif;
+html, body {
+  height: 100%;
   margin: 0;
-  padding: 20px;
+  padding: 0;
+  font-family: Arial, sans-serif;
   background: #f9f9f9;
+}
+
+body {
   display: flex;
   justify-content: center;
+  align-items: center; /* Centrado vertical */
+  min-height: 100vh;   /* Ocupa toda la altura de la pantalla */
+  padding: 10px;
+  box-sizing: border-box;
 }
 
 .card {
   background: white;
   padding: 25px;
   border-radius: 12px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
   width: 100%;
-  max-width: 450px;
+  max-width: 400px;
   box-sizing: border-box;
 }
 
 h2 {
-  color: #333;
   text-align: center;
-  font-size: 1.6em;
+  color: #333;
   margin-bottom: 20px;
+  font-size: 1.6em;
 }
 
 .input-group {
@@ -80,9 +88,6 @@ button:hover {
 
 /* Responsive para móvil */
 @media (max-width: 480px) {
-  body {
-    padding: 10px;
-  }
   .card {
     padding: 15px;
   }
