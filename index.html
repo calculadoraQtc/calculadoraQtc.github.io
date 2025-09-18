@@ -1,14 +1,160 @@
-<!DOCTYPE html><html lang="es">
+<!DOCTYPE html>
+<html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <title>Calculadora QTc</title>
-  <style>
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      margin: 0;
-      padding: 0;
-      background: linear-gradient(135deg, #74ebd5 0%, #ACB6E5 100%);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height
+<meta charset="UTF-8">
+<title>Calculadora QTc</title>
+<style>
+/* ===== CSS ===== */
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  padding: 0;
+  background: linear-gradient(135deg, #74ebd5 0%, #ACB6E5 100%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.card {
+  background: #fff;
+  padding: 30px;
+  border-radius: 16px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.2);
+  max-width: 420px;
+  width: 100%;
+  animation: fadeIn 0.6s ease;
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+label {
+  display: block;
+  margin-top: 15px;
+  font-weight: bold;
+  color: #444;
+}
+
+input, select {
+  width: 100%;
+  padding: 10px;
+  margin-top: 6px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 15px;
+  box-sizing: border-box;
+  transition: border 0.2s;
+}
+
+input:focus, select:focus {
+  border: 1px solid #007BFF;
+  outline: none;
+}
+
+button {
+  margin-top: 20px;
+  width: 100%;
+  padding: 12px;
+  background: #007BFF;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+button:hover {
+  background: #0056b3;
+}
+
+.resultado {
+  margin-top: 20px;
+  padding: 15px;
+  border-radius: 10px;
+  background: #eef;
+  font-size: 16px;
+  line-height: 1.4;
+  box-shadow: inset 0 0 6px rgba(0,0,0,0.1);
+}
+
+/* Animación de entrada */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+</style>
+</head>
+<body>
+
+<div class="card">
+  <h2>Calculadora de QTc</h2>
+
+  <label for="qt">QT:</label>
+  <input type="number" id="qt" step="1" placeholder="Ej: 360 o 9 cuadraditos">
+  <select id="qtUnidad">
+    <option value="ms">ms</option>
+    <option value="cuad">cuadraditos</option>
+  </select>
+
+  <label for="rr">RR:</label>
+  <input type="number" id="rr" step="1" placeholder="Ej: 840 o 21 cuadraditos">
+  <select id="rrUnidad">
+    <option value="ms">ms</option>
+    <option value="cuad">cuadraditos</option>
+  </select>
+
+  <button onclick="calcularQTc()">Calcular</button>
+
+  <div id="resultado" class="resultado" style="display:none;"></div>
+</div>
+
+<script>
+/* ===== JS ===== */
+function calcularQTc() {
+  let qt = parseFloat(document.getElementById("qt").value);
+  let rr = parseFloat(document.getElementById("rr").value);
+  let qtUnidad = document.getElementById("qtUnidad").value;
+  let rrUnidad = document.getElementById("rrUnidad").value;
+
+  if (isNaN(qt) || isNaN(rr)) {
+    alert("Por favor, ingresa valores válidos");
+    return;
+  }
+
+  // Convertir a segundos para el cálculo
+  if (qtUnidad === "cuad") qt *= 0.04;
+  else qt /= 1000; // ms a segundos
+
+  if (rrUnidad === "cuad") rr *= 0.04;
+  else rr /= 1000; // ms a segundos
+
+  // Fórmula de Bazett
+  let qtcBazett = qt / Math.sqrt(rr);
+  // Fórmula de Fridericia
+  let qtcFridericia = qt / Math.cbrt(rr);
+
+  let qtcBazettMs = qtcBazett * 1000;
+  let qtcFridericiaMs = qtcFridericia * 1000;
+
+  // Interpretación simple
+  function interpretar(qtc) {
+    if (qtc < 440) return "Normal en varones";
+    else if (qtc < 460) return "Normal en mujeres, límite en varones";
+    else return "Prolongado";
+  }
+
+  document.getElementById("resultado").style.display = "block";
+  document.getElementById("resultado").innerHTML =
+    `<b>QTc (Bazett):</b> ${qtcBazettMs.toFixed(0)} ms — ${interpretar(qtcBazettMs)}<br>` +
+    `<b>QTc (Fridericia):</b> ${qtcFridericiaMs.toFixed(0)} ms — ${interpretar(qtcFridericiaMs)}`;
+}
+</script>
+
+</body>
+</html>
