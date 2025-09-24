@@ -2,11 +2,38 @@
 <html lang="es">
 
 <head>
-  <meta name="google-site-verification" content="LCGPDSlNvAWgG8nmTtlGldRpRumg4z9EgABCd0Uh0HY" />
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Calculadora QTc</title>
+
+  <title>Calculadora QTc (Fórmula de Bazett) - Online</title>
+
+  <!-- Meta SEO -->
+  <meta name="description" content="Calculadora QTc online con fórmula de Bazett. Ingresa el QT y el RR (en segundos o cuadraditos) y obtén el QT corregido con interpretación según edad y sexo.">
+  <meta name="keywords" content="QTc, Bazett, calculadora QTc, electrocardiograma, pediatría, adultos, adolescentes, QT prolongado, QT corto, intervalo QT, medicina, cardiología">
+  <meta name="author" content="Miguel - Doctor en Medicina">
+  <meta name="robots" content="index, follow">
+
+  <!-- Google Search Console -->
+  <meta name="google-site-verification" content="LCGPDSlNvAWgG8nmTtlGldRpRumg4z9EgABCd0Uh0HY" />
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:title" content="Calculadora QTc (Bazett) Online">
+  <meta property="og:description" content="Calculadora online de QT corregido (QTc) con fórmula de Bazett. Incluye valores normales según edad y sexo.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://tusitio.com/calculadora-qtc">
+  <meta property="og:image" content="https://tusitio.com/preview-qtc.jpg">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Calculadora QTc (Bazett) Online">
+  <meta name="twitter:description" content="Calculadora de QTc con fórmula de Bazett. Valores normales según edad y sexo.">
+  <meta name="twitter:image" content="https://tusitio.com/preview-qtc.jpg">
+
+  <!-- Favicon -->
+  <link rel="icon" href="https://tusitio.com/favicon.ico" type="image/x-icon">
+
   <style>
+    /* --- exactamente igual a tu CSS original --- */
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       margin: 0;
@@ -170,9 +197,9 @@
 </head>
 
 <body>
-  <div class="main-title">Calculadora QTc (Bazett)</div>
+  <h1 class="main-title">Calculadora QTc (Fórmula de Bazett)</h1>
   <div class="card">
-    <h2>Calculadora de QTc (Bazett)</h2>
+    <h2>QT corregido (QTc) según edad y sexo</h2>
 
     <label for="grupo">Grupo edad/sexo:</label>
     <select id="grupo">
@@ -202,6 +229,7 @@
 
     <div id="resultado" class="resultado" style="display:none;"></div>
 
+    <h3>Valores de referencia QTc</h3>
     <table>
       <thead>
         <tr>
@@ -278,21 +306,20 @@
       let qtc = qt / Math.sqrt(rr);
       let qtcMs = qtc * 1000;
 
-      // Clasificación según grupo
       const limites = {
-        lactante: {corto:360, normalMax:450, limite:460},
-        niño: {corto:360, normalMax:440, limite:460},
-        adolescenteH: {corto:340, normalMax:450, limite:460},
-        adolescenteM: {corto:340, normalMax:460, limite:470},
-        adultoH: {corto:340, normalMax:450, limite:460},
-        adultoM: {corto:340, normalMax:460, limite:470}
+        lactante: { corto: 360, normalMax: 450, limite: 460 },
+        niño: { corto: 360, normalMax: 440, limite: 460 },
+        adolescenteH: { corto: 340, normalMax: 450, limite: 460 },
+        adolescenteM: { corto: 340, normalMax: 460, limite: 470 },
+        adultoH: { corto: 340, normalMax: 450, limite: 460 },
+        adultoM: { corto: 340, normalMax: 460, limite: 470 }
       };
 
       let l = limites[grupo];
       let clasificacion;
-      if(qtcMs < l.corto) clasificacion = "QTc corto";
-      else if(qtcMs <= l.normalMax) clasificacion = "Normal";
-      else if(qtcMs <= l.limite) clasificacion = "En el límite";
+      if (qtcMs < l.corto) clasificacion = "QTc corto";
+      else if (qtcMs <= l.normalMax) clasificacion = "Normal";
+      else if (qtcMs <= l.limite) clasificacion = "En el límite";
       else clasificacion = "Prolongado";
 
       document.getElementById("resultado").style.display = "block";
